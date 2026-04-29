@@ -61,8 +61,8 @@ const Login = () => {
             >
               <svg
                 aria-label="Google logo"
-                width="16"
-                height="16"
+                width="25"
+                height="25"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 512 512"
               >
