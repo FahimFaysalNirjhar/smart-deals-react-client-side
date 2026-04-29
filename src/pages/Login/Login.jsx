@@ -51,7 +51,7 @@ const Login = () => {
               required
             />
             <button className="btn w-full mt-4 bg-gradient-to-br from-[#632EE3] to-[#9F62F2] text-white border-0">
-              Register
+              Sign In
             </button>
             <p className="text-red-500 text-sm">{error}</p>
             <div className="divider">OR</div>
