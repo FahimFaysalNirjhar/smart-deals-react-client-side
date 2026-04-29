@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 
 const Header = () => {
   const Links = (
@@ -87,14 +87,17 @@ const Header = () => {
           <ul className="menu menu-horizontal px-1">{Links}</ul>
         </div>
         <div className="navbar-end gap-4">
-          <a className="btn border-2 border-[#632EE3]">
+          <Link to="/login" className="btn border-2 border-[#632EE3]">
             <span className="bg-gradient-to-br from-[#632EE3] to-[#9F62F2] bg-clip-text text-transparent">
               Login
             </span>
-          </a>
-          <button className="btn bg-gradient-to-br from-[#632EE3] to-[#9F62F2] text-white border-0">
+          </Link>
+          <Link
+            to="/register"
+            className="btn bg-gradient-to-br from-[#632EE3] to-[#9F62F2] text-white border-0"
+          >
             Register
-          </button>
+          </Link>
         </div>
       </div>
     </div>
