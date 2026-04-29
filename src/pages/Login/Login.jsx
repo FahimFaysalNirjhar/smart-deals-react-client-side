@@ -1,16 +1,37 @@
 import React, { use, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../../Provider/AuthContext";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { signInGoogle } = use(AuthContext);
+  const { signInGoogle, signIn } = use(AuthContext);
   const handleLoginUser = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
     console.log(email, password);
+
+    signIn(email, password).then((result) => {
+      console.log(result.user);
+      if (!result.user.emailVerified) {
+        Swal.fire({
+          title: "Email Not Verified!",
+          text: "Please verify your email before logging in.",
+          icon: "warning",
+          confirmButtonText: "OK",
+          titleText: "Email Not Verified!",
+          customClass: {
+            title: "text-2xl font-bold text-[#001931]",
+            text: "text-base text-gray-600",
+            confirmButton:
+              "bg-gradient-to-br from-[#632EE3] to-[#9F62F2] text-white font-medium px-6 py-2 rounded-lg border-0",
+          },
+          buttonsStyling: false,
+        });
+      }
+    });
   };
 
   const handleGoogleLogin = () => {
