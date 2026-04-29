@@ -1,9 +1,10 @@
 import React, { use, useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../../Provider/AuthContext";
 
 const Login = () => {
   const [error, setError] = useState("");
+  const navigate = useNavigate();
   const { signInGoogle } = use(AuthContext);
   const handleLoginUser = (e) => {
     e.preventDefault();
@@ -13,7 +14,21 @@ const Login = () => {
   };
 
   const handleGoogleLogin = () => {
-    signInGoogle();
+    signInGoogle()
+      .then(() => {
+        navigate("/");
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+
+        // The AuthCredential type that was used.
+
+        // ...
+        setError(errorCode, errorMessage);
+      });
   };
 
   return (
