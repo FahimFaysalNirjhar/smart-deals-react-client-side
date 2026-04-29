@@ -33,14 +33,6 @@ const Login = () => {
         </p>
         <form onSubmit={handleLoginUser}>
           <fieldset className="fieldset gap-1">
-            <legend className="fieldset-legend text-sm">Name</legend>
-            <input
-              type="text"
-              name="name"
-              className="input w-full"
-              placeholder="Enter your name"
-              required
-            />
             <legend className="fieldset-legend text-sm">Email</legend>
             <input
               type="email"
@@ -49,14 +41,7 @@ const Login = () => {
               placeholder="Enter your email"
               required
             />
-            <legend className="fieldset-legend text-sm">Image-URL</legend>
-            <input
-              type="text"
-              name="photoUrl"
-              className="input w-full"
-              placeholder="Image URL"
-              required
-            />
+
             <legend className="fieldset-legend text-sm">Password</legend>
             <input
               type="password"
