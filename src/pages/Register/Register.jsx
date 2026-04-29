@@ -21,6 +21,8 @@ const Register = () => {
     const numberRegex = /\d/;
     const specialRegex = /^(?=.*[!@#$%^&*(),.?":{}|<>]).+$/;
 
+    setError("");
+
     if (!lengthRegex.test(password)) {
       setError("Password must be at least 6 characters long.");
       return;
