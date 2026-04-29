@@ -1,7 +1,58 @@
-import React from "react";
-import { Link } from "react-router";
+import React, { use, useState } from "react";
+import { Link, useNavigate } from "react-router";
+import { AuthContext } from "../../Provider/AuthContext";
+import { sendEmailVerification } from "firebase/auth";
+import Swal from "sweetalert2";
 
 const Register = () => {
+  const [error, setError] = useState("");
+  const { createUser } = use(AuthContext);
+  const navigate = useNavigate();
+  const handleAddUser = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    console.log(email, password);
+    const lengthRegex = /^.{6,}$/;
+    const upperCaseRegex = /^(?=.*[A-Z]).+$/;
+    const numberRegex = /\d/;
+    const specialRegex = /^(?=.*[!@#$%^&*(),.?":{}|<>]).+$/;
+
+    if (!lengthRegex.test(password)) {
+      setError("Password must be at least 6 characters long.");
+      return;
+    } else if (!upperCaseRegex.test(password)) {
+      setError("Password must contain at least one uppercase letter");
+      return;
+    } else if (!numberRegex.test(password)) {
+      setError("Password must contain at least one number.");
+      return;
+    } else if (!specialRegex.test(password)) {
+      setError("Password must contain at least one special character.");
+      return;
+    }
+
+    createUser(email, password)
+      .then((result) => {
+        console.log(result.user);
+        sendEmailVerification(result.user).then(() => {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "A verification email has been sent.",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        });
+        navigate("/login");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setError(errorCode, errorMessage);
+        // ..
+      });
+  };
   return (
     <div className="min-h-screen bg-[#E9E9E9] flex items-center justify-center p-14">
       <div className="w-full max-w-md p-8 rounded-lg bg-white shadow-[0_10px_20px_-12px_rgba(0,0,0,0.10)]">
@@ -17,7 +68,7 @@ const Register = () => {
             Login Now
           </Link>
         </p>
-        <form action="">
+        <form onSubmit={handleAddUser}>
           <fieldset className="fieldset gap-1">
             <legend className="fieldset-legend text-sm">Name</legend>
             <input
@@ -25,13 +76,15 @@ const Register = () => {
               name="name"
               className="input w-full"
               placeholder="Enter your name"
+              required
             />
             <legend className="fieldset-legend text-sm">Email</legend>
             <input
-              type="text"
+              type="email"
               name="email"
               className="input w-full"
               placeholder="Enter your email"
+              required
             />
             <legend className="fieldset-legend text-sm">Image-URL</legend>
             <input
@@ -39,6 +92,7 @@ const Register = () => {
               name="photoUrl"
               className="input w-full"
               placeholder="Image URL"
+              required
             />
             <legend className="fieldset-legend text-sm">Password</legend>
             <input
@@ -46,10 +100,12 @@ const Register = () => {
               name="password"
               className="input w-full"
               placeholder="Enter your password"
+              required
             />
             <button className="btn w-full mt-4 bg-gradient-to-br from-[#632EE3] to-[#9F62F2] text-white border-0">
               Register
             </button>
+            <p className="text-red-500 text-sm">{error}</p>
             <div className="divider">OR</div>
             <button className="btn w-full bg-white text-black border-[#e5e5e5]">
               <svg
