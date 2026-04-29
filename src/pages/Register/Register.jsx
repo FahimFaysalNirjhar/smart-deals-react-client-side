@@ -1,18 +1,21 @@
 import React, { use, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../../Provider/AuthContext";
-import { sendEmailVerification } from "firebase/auth";
+import { sendEmailVerification, updateProfile } from "firebase/auth";
 import Swal from "sweetalert2";
 
 const Register = () => {
   const [error, setError] = useState("");
-  const { createUser } = use(AuthContext);
+  const { createUser, signInGoogle } = use(AuthContext);
   const navigate = useNavigate();
+
   const handleAddUser = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
+    const name = e.target.name.value;
+    const photoUrl = e.target.photoUrl.value;
     const password = e.target.password.value;
-    console.log(email, password);
+    console.log(email, password, name, photoUrl);
     const lengthRegex = /^.{6,}$/;
     const upperCaseRegex = /^(?=.*[A-Z]).+$/;
     const numberRegex = /\d/;
@@ -44,6 +47,18 @@ const Register = () => {
             timer: 1500,
           });
         });
+
+        const profile = {
+          displayName: name,
+          photoURL: photoUrl,
+        };
+        updateProfile(result.user, profile)
+          .then(() => {
+            console.log("Proflie Updated");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
         navigate("/login");
       })
       .catch((error) => {
@@ -53,6 +68,25 @@ const Register = () => {
         // ..
       });
   };
+
+  const handleGoogleLogin = () => {
+    signInGoogle()
+      .then(() => {
+        navigate("/login");
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+
+        // The AuthCredential type that was used.
+
+        // ...
+        setError(errorCode, errorMessage);
+      });
+  };
+
   return (
     <div className="min-h-screen bg-[#E9E9E9] flex items-center justify-center p-14">
       <div className="w-full max-w-md p-8 rounded-lg bg-white shadow-[0_10px_20px_-12px_rgba(0,0,0,0.10)]">
@@ -107,7 +141,10 @@ const Register = () => {
             </button>
             <p className="text-red-500 text-sm">{error}</p>
             <div className="divider">OR</div>
-            <button className="btn w-full bg-white text-black border-[#e5e5e5]">
+            <button
+              onClick={handleGoogleLogin}
+              className="btn w-full bg-white text-black border-[#e5e5e5]"
+            >
               <svg
                 aria-label="Google logo"
                 width="16"
