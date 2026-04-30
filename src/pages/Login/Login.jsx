@@ -1,11 +1,14 @@
 import React, { use, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../../Provider/AuthContext";
 import Swal from "sweetalert2";
 
 const Login = () => {
   const [error, setError] = useState("");
   const emailRef = useRef(null);
+  const location = useLocation();
+  console.log(location);
+
   const navigate = useNavigate();
   const { signInGoogle, signIn, forgetPassword } = use(AuthContext);
   const handleLoginUser = (e) => {
@@ -16,35 +19,25 @@ const Login = () => {
 
     signIn(email, password)
       .then((result) => {
-        console.log(result.user);
-        if (!result.user.emailVerified) {
+        const user = result.user;
+
+        if (!user.emailVerified) {
           Swal.fire({
-            title: "Email Not Verified!",
-            text: "Please verify your email before logging in.",
+            toast: true,
+            position: "top-end",
             icon: "warning",
-            confirmButtonText: "OK",
-            titleText: "Email Not Verified!",
-            customClass: {
-              title: "text-2xl font-bold text-[#001931]",
-              text: "text-base text-gray-600",
-              confirmButton:
-                "bg-gradient-to-br from-[#632EE3] to-[#9F62F2] text-white font-medium px-6 py-2 rounded-lg border-0",
-            },
-            buttonsStyling: false,
+            title: "Email not verified",
+            text: "Some features may be limited",
+            showConfirmButton: false,
+            timer: 2500,
           });
         }
-        navigate("/");
+
+        // ✅ Always navigate
+        navigate(location.state || "/");
       })
       .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-
-        // The AuthCredential type that was used.
-
-        // ...
-        setError(errorCode, errorMessage);
+        setError(error.code);
       });
   };
 
