@@ -14,26 +14,38 @@ const Login = () => {
     const password = e.target.password.value;
     console.log(email, password);
 
-    signIn(email, password).then((result) => {
-      console.log(result.user);
-      if (!result.user.emailVerified) {
-        Swal.fire({
-          title: "Email Not Verified!",
-          text: "Please verify your email before logging in.",
-          icon: "warning",
-          confirmButtonText: "OK",
-          titleText: "Email Not Verified!",
-          customClass: {
-            title: "text-2xl font-bold text-[#001931]",
-            text: "text-base text-gray-600",
-            confirmButton:
-              "bg-gradient-to-br from-[#632EE3] to-[#9F62F2] text-white font-medium px-6 py-2 rounded-lg border-0",
-          },
-          buttonsStyling: false,
-        });
-      }
-      navigate("/");
-    });
+    signIn(email, password)
+      .then((result) => {
+        console.log(result.user);
+        if (!result.user.emailVerified) {
+          Swal.fire({
+            title: "Email Not Verified!",
+            text: "Please verify your email before logging in.",
+            icon: "warning",
+            confirmButtonText: "OK",
+            titleText: "Email Not Verified!",
+            customClass: {
+              title: "text-2xl font-bold text-[#001931]",
+              text: "text-base text-gray-600",
+              confirmButton:
+                "bg-gradient-to-br from-[#632EE3] to-[#9F62F2] text-white font-medium px-6 py-2 rounded-lg border-0",
+            },
+            buttonsStyling: false,
+          });
+        }
+        navigate("/");
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+
+        // The AuthCredential type that was used.
+
+        // ...
+        setError(errorCode, errorMessage);
+      });
   };
 
   const handleGoogleLogin = () => {

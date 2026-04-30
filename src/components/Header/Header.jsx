@@ -54,6 +54,73 @@ const Header = () => {
           All Products
         </NavLink>
       </li>
+      {user && (
+        <>
+          <li>
+            <NavLink
+              to="/myProducts"
+              end
+              className="font-medium text-base px-4 py-2"
+              style={({ isActive }) =>
+                isActive
+                  ? {
+                      border: "2px solid transparent",
+                      borderRadius: "8px",
+                      backgroundImage:
+                        "linear-gradient(white, white), linear-gradient(125deg, #632EE3, #9F62F2)",
+                      backgroundOrigin: "border-box",
+                      backgroundClip: "padding-box, border-box",
+                    }
+                  : {}
+              }
+            >
+              My Products
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/mybids"
+              end
+              className="font-medium text-base px-4 py-2"
+              style={({ isActive }) =>
+                isActive
+                  ? {
+                      border: "2px solid transparent",
+                      borderRadius: "8px",
+                      backgroundImage:
+                        "linear-gradient(white, white), linear-gradient(125deg, #632EE3, #9F62F2)",
+                      backgroundOrigin: "border-box",
+                      backgroundClip: "padding-box, border-box",
+                    }
+                  : {}
+              }
+            >
+              My Bids
+            </NavLink>
+          </li>
+        </>
+      )}
+      <li>
+        <NavLink
+          to="/products"
+          end
+          className="font-medium text-base px-4 py-2"
+          style={({ isActive }) =>
+            isActive
+              ? {
+                  border: "2px solid transparent",
+                  borderRadius: "8px",
+                  backgroundImage:
+                    "linear-gradient(white, white), linear-gradient(125deg, #632EE3, #9F62F2)",
+                  backgroundOrigin: "border-box",
+                  backgroundClip: "padding-box, border-box",
+                }
+              : {}
+          }
+        >
+          Create Product
+        </NavLink>
+      </li>
     </>
   );
 
