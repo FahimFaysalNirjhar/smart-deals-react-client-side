@@ -102,7 +102,7 @@ const Header = () => {
       )}
       <li>
         <NavLink
-          to="/products"
+          to="/createProducts"
           end
           className="font-medium text-base px-4 py-2"
           style={({ isActive }) =>
