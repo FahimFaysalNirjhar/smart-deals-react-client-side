@@ -43,8 +43,10 @@ const Login = () => {
 
   const handleGoogleLogin = () => {
     signInGoogle()
-      .then(() => {
-        navigate("/");
+      .then((result) => {
+        console.log(result);
+
+        navigate(location.state || "/");
       })
       .catch((error) => {
         // Handle Errors here.

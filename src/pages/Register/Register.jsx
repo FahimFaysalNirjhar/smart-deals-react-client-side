@@ -1,5 +1,5 @@
 import React, { use, useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../../Provider/AuthContext";
 import { sendEmailVerification, updateProfile } from "firebase/auth";
 import Swal from "sweetalert2";
@@ -8,6 +8,7 @@ const Register = () => {
   const [error, setError] = useState("");
   const { createUser, signInGoogle } = use(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleAddUser = (e) => {
     e.preventDefault();
@@ -74,7 +75,7 @@ const Register = () => {
   const handleGoogleLogin = () => {
     signInGoogle()
       .then(() => {
-        navigate("/login");
+        navigate(location.state || "/");
       })
       .catch((error) => {
         // Handle Errors here.
