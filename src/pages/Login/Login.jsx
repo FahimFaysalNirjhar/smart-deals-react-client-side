@@ -1,12 +1,13 @@
-import React, { use, useState } from "react";
+import React, { use, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../../Provider/AuthContext";
 import Swal from "sweetalert2";
 
 const Login = () => {
   const [error, setError] = useState("");
+  const emailRef = useRef(null);
   const navigate = useNavigate();
-  const { signInGoogle, signIn } = use(AuthContext);
+  const { signInGoogle, signIn, forgetPassword } = use(AuthContext);
   const handleLoginUser = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -31,6 +32,7 @@ const Login = () => {
           buttonsStyling: false,
         });
       }
+      navigate("/");
     });
   };
 
@@ -50,6 +52,49 @@ const Login = () => {
         // ...
         setError(errorCode, errorMessage);
       });
+  };
+
+  const handleForgetPassword = () => {
+    const email = emailRef.current.value;
+    console.log(email);
+    if (!email) {
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "warning",
+        title: "Please enter your email",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        customClass: {
+          popup: "bg-white shadow-lg rounded-lg",
+          title: "text-sm font-medium text-[#001931]",
+        },
+      });
+    } else {
+      forgetPassword(email)
+        .then(() => {
+          Swal.fire({
+            toast: true,
+            position: "top-end",
+            icon: "success",
+            title: "Password reset email sent!",
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            customClass: {
+              popup: "bg-white shadow-lg rounded-lg",
+              title: "text-sm font-medium text-[#001931]",
+            },
+          });
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // ..
+          setError(errorCode, errorMessage);
+        });
+    }
   };
 
   return (
@@ -73,6 +118,7 @@ const Login = () => {
             <input
               type="email"
               name="email"
+              ref={emailRef}
               className="input w-full"
               placeholder="Enter your email"
               required
@@ -86,6 +132,9 @@ const Login = () => {
               placeholder="Enter your password"
               required
             />
+            <div onClick={handleForgetPassword}>
+              <a className="link link-hover">Forgot password?</a>
+            </div>
             <button className="btn w-full mt-4 bg-gradient-to-br from-[#632EE3] to-[#9F62F2] text-white border-0">
               Sign In
             </button>
