@@ -125,7 +125,7 @@ const Header = () => {
   );
 
   return (
-    <div className="navbar border-b border-[#E9E9E9] bg-white">
+    <div className="navbar sticky top-0 z-50 bg-white border-b border-[#E9E9E9]">
       {/* LEFT — logo + mobile menu */}
       <div className="navbar-start">
         <div className="dropdown">
@@ -152,7 +152,7 @@ const Header = () => {
             {Links}
           </ul>
         </div>
-        <a className="text-3xl text-[#001931] font-bold">
+        <a className="text-xl sm:text-2xl lg:text-3xl font-bold">
           Smart
           <span className="bg-gradient-to-br from-[#632EE3] to-[#9F62F2] bg-clip-text text-transparent">
             Deals
@@ -168,11 +168,11 @@ const Header = () => {
       {/* RIGHT — auth */}
       <div className="navbar-end">
         {user ? (
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <img
               width={40}
               height={40}
-              className="rounded-full ring-2 ring-[#632EE3] object-cover w-10 h-10"
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover border"
               src={user.photoURL}
               alt={user.displayName}
             />
