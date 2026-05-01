@@ -190,14 +190,17 @@ const Header = () => {
           </div>
         ) : (
           <div className="flex items-center gap-4">
-            <Link to="/login" className="btn border-2 border-[#632EE3]">
+            <Link
+              to="/login"
+              className="btn btn-sm sm:btn-md border-2 border-[#632EE3]"
+            >
               <span className="bg-gradient-to-br from-[#632EE3] to-[#9F62F2] bg-clip-text text-transparent">
                 Login
               </span>
             </Link>
             <Link
               to="/register"
-              className="btn bg-gradient-to-br from-[#632EE3] to-[#9F62F2] text-white border-0"
+              className="btn btn-sm sm:btn-md bg-gradient-to-br from-[#632EE3] to-[#9F62F2] text-white border-0"
             >
               Register
             </Link>
