@@ -22,9 +22,16 @@ const Hero = () => {
       <div className="relative z-10 text-center max-w-3xl">
         {/* Heading */}
         <h1 className="text-4xl md:text-6xl font-bold text-[#0F172A] leading-tight">
-          Deal Your <span className="text-[#8B5CF6]">Products</span>
+          Deal Your{" "}
+          <span className="bg-gradient-to-br from-[#632EE3] to-[#9F62F2] bg-clip-text text-transparent">
+            Products
+          </span>
           <br />
-          In A <span className="text-[#8B5CF6]">Smart</span> Way !
+          In A{" "}
+          <span className="bg-gradient-to-br from-[#632EE3] to-[#9F62F2] bg-clip-text text-transparent">
+            Smart
+          </span>{" "}
+          Way !
         </h1>
 
         {/* Subtitle */}
