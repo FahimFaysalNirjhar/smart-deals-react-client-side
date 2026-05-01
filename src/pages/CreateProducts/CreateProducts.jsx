@@ -5,11 +5,12 @@ const CreateProducts = () => {
     <div className="min-h-screen bg-[#E9E9E9] flex items-center justify-center p-14">
       <div>
         {/* Header */}
-        <div className="text-center">
-          <h1 className="text-[#001931] text-xl font-medium mb-4">
+        <div className="text-center px-4">
+          <h1 className="text-[#001931] text-sm sm:text-base md:text-lg font-medium mb-3 sm:mb-4">
             ← Back to Products
           </h1>
-          <p className="text-[#001931] text-5xl font-bold">
+
+          <p className="text-[#001931] text-2xl sm:text-3xl md:text-5xl font-bold leading-tight">
             Create{" "}
             <span className="bg-gradient-to-br from-[#632EE3] to-[#9F62F2] bg-clip-text text-transparent">
               A Product
