@@ -1,7 +1,13 @@
-import React, { useRef } from "react";
+import React, { use, useRef } from "react";
 import { useLoaderData, Link } from "react-router";
+import { AuthContext } from "../../Provider/AuthContext";
+import Swal from "sweetalert2";
 
 const ProductDetails = () => {
+  const { user } = use(AuthContext);
+  const { displayName, email, photoURL } = user;
+  console.log(user);
+
   const product = useLoaderData();
   const bidModalRef = useRef();
 
@@ -27,6 +33,55 @@ const ProductDetails = () => {
     sellerContact,
     sellerImage,
   } = product;
+
+  const handleBidSubmit = (e) => {
+    e.preventDefault();
+    const product_id = _id;
+    const buyerEmail = e.target.email.value;
+    const buyerName = e.target.name.value;
+    const buyerImage = e.target.photoUrl.value;
+    const bidPrice = e.target.bid_price.value;
+    const contact = e.target.phoneNumber.value;
+    const created_at = new Date().toISOString();
+    console.log(
+      product_id,
+      buyerEmail,
+      buyerImage,
+      buyerName,
+      bidPrice,
+      contact,
+      created_at,
+    );
+    const newBid = {
+      product_id,
+      buyerEmail,
+      buyerImage,
+      buyerName,
+      bidPrice,
+      contact,
+      created_at,
+    };
+
+    fetch("http://localhost:3000/bids", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newBid),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("after bids placed", data);
+        bidModalRef.current.close();
+        Swal.fire({
+          title: "Bid Submitted 🚀",
+          text: "Seller will review your offer soon.",
+          icon: "success",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+      });
+  };
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
@@ -145,12 +200,17 @@ const ProductDetails = () => {
           </h3>
 
           {/* Form */}
-          <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <form
+            onSubmit={handleBidSubmit}
+            className="grid grid-cols-1 md:grid-cols-2 gap-4"
+          >
             {/* Buyer Name */}
             <div>
               <label className="text-sm font-medium">Buyer Name</label>
               <input
                 type="text"
+                name="name"
+                value={displayName}
                 placeholder="Your name"
                 className="w-full mt-1 px-4 py-2 border rounded-md outline-none"
               />
@@ -161,6 +221,8 @@ const ProductDetails = () => {
               <label className="text-sm font-medium">Buyer Email</label>
               <input
                 type="email"
+                name="email"
+                value={email}
                 placeholder="Your Email"
                 className="w-full mt-1 px-4 py-2 border rounded-md outline-none"
               />
@@ -171,6 +233,8 @@ const ProductDetails = () => {
               <label className="text-sm font-medium">Buyer Image URL</label>
               <input
                 type="text"
+                name="photoUrl"
+                value={photoURL}
                 placeholder="https://...your_img_url"
                 className="w-full mt-1 px-4 py-2 border rounded-md outline-none"
               />
@@ -181,6 +245,7 @@ const ProductDetails = () => {
               <label className="text-sm font-medium">Place your Price</label>
               <input
                 type="number"
+                name="bid_price"
                 placeholder="e.g. 25000"
                 className="w-full mt-1 px-4 py-2 border rounded-md outline-none"
               />
@@ -191,6 +256,7 @@ const ProductDetails = () => {
               <label className="text-sm font-medium">Contact Info</label>
               <input
                 type="text"
+                name="phoneNumber"
                 placeholder="e.g. +8801XXXXXXXXX"
                 className="w-full mt-1 px-4 py-2 border rounded-md outline-none"
               />
