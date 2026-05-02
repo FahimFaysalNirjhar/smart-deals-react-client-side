@@ -1,7 +1,19 @@
 import React from "react";
 import { Link } from "react-router";
 
-const Hero = () => {
+const Hero = ({ setSearchData }) => {
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const search = e.target.search.value;
+    console.log(search);
+
+    fetch(`http://localhost:3000/products/search?q=${search}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setSearchData(data);
+      });
+  };
   return (
     <div className="relative min-h-screen flex items-center justify-center bg-[linear-gradient(127deg,#FFE6FD_5.68%,#E0F8F5_92.19%)] overflow-hidden px-4">
       {/* LEFT DECORATION */}
@@ -42,40 +54,44 @@ const Hero = () => {
 
         {/* SEARCH BAR */}
         <div className="mt-8 flex justify-center">
-          <div className="flex w-full max-w-xl bg-white rounded-full shadow-md overflow-hidden">
+          <form
+            onSubmit={handleSearch}
+            className="flex w-full max-w-xl bg-white rounded-full shadow-md overflow-hidden"
+          >
             <input
               type="text"
+              name="search"
               placeholder="Search for products, categories..."
-              className="w-full px-6 py-3 border-0 outline-none text-sm"
+              className="flex-1 px-6 py-3 border-0 outline-none text-sm text-gray-700 placeholder-gray-400"
             />
-
-            <button className="bg-gradient-to-br from-[#632EE3] to-[#9F62F2] px-5 flex items-center justify-center">
-              <div>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                >
-                  <path
-                    d="M17.5 17.5L13.8833 13.8833"
-                    stroke="white"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
-                    stroke="white"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </div>
+            <button
+              type="submit"
+              className="bg-gradient-to-br from-[#632EE3] to-[#9F62F2] px-5 flex items-center justify-center shrink-0"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+              >
+                <path
+                  d="M17.5 17.5L13.8833 13.8833"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </button>
-          </div>
+          </form>
         </div>
 
         {/* BUTTONS */}
