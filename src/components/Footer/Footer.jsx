@@ -174,7 +174,7 @@ const Footer = () => {
       {/* Bottom bar */}
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-6 py-5 text-center text-xs text-gray-500">
-          © 2025 SmartDeals. All rights reserved.
+          © 2026 SmartDeals. All rights reserved.
         </div>
       </div>
     </footer>
