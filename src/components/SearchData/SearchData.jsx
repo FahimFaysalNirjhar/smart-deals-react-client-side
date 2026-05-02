@@ -3,7 +3,6 @@ import React from "react";
 import ProductCard from "../ProductCard/ProductCard";
 
 const SearchData = ({ searchData }) => {
-  // ALWAYS make it an array
   const products = Array.isArray(searchData) ? searchData : [];
 
   return (
@@ -17,7 +16,7 @@ const SearchData = ({ searchData }) => {
           </span>
         </p>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-14">
         {products.map((product) => (
           <ProductCard key={product._id} product={product} />
         ))}

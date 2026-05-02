@@ -13,7 +13,7 @@ const LatestProducts = ({ latestProductsPromise }) => {
           </span>
         </p>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-14">
         {latestProducts.map((product) => (
           <ProductCard key={product._id} product={product} />
         ))}

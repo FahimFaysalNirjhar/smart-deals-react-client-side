@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Hero from "../../components/Hero/Hero";
 import LatestProducts from "../../components/LatestProducts/LatestProducts";
 import SearchData from "../../components/SearchData/SearchData";
+import ShowAll from "../../components/ShowAll/ShowAll";
 
 const latestProductsPromise = fetch(
   "http://localhost:3000/latest-products",
@@ -21,6 +22,7 @@ const Home = () => {
           latestProductsPromise={latestProductsPromise}
         ></LatestProducts>
       )}
+      <ShowAll></ShowAll>
     </div>
   );
 };
