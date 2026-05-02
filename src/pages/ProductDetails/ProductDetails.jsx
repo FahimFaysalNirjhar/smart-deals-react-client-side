@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useLoaderData, Link } from "react-router";
 
 const ProductDetails = () => {
   const product = useLoaderData();
+  const bidModalRef = useRef();
+
+  const handleModal = () => {
+    bidModalRef.current.showModal();
+  };
 
   const {
     _id,
@@ -98,7 +103,10 @@ const ProductDetails = () => {
           </div>
 
           {/* Button */}
-          <button className="w-full py-3 rounded-md text-white font-medium bg-gradient-to-br from-[#632EE3] to-[#9F62F2]">
+          <button
+            onClick={handleModal}
+            className="w-full py-3 rounded-md text-white font-medium bg-gradient-to-br from-[#632EE3] to-[#9F62F2]"
+          >
             I Want Buy This Product
           </button>
         </div>
@@ -121,6 +129,93 @@ const ProductDetails = () => {
 
         <p className="text-gray-600 text-sm leading-relaxed">{description}</p>
       </div>
+
+      {/* Open the modal using document.getElementById('ID').showModal() method */}
+      {/* <button
+        className="btn"
+        onClick={() => document.getElementById("my_modal_5").showModal()}
+      >
+        open modal
+      </button> */}
+      <dialog ref={bidModalRef} className="modal modal-bottom sm:modal-middle">
+        <div className="modal-box max-w-2xl rounded-lg">
+          {/* Title */}
+          <h3 className="text-xl md:text-2xl font-bold text-center text-[#0F172A] mb-6">
+            Give Seller Your Offered Price
+          </h3>
+
+          {/* Form */}
+          <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Buyer Name */}
+            <div>
+              <label className="text-sm font-medium">Buyer Name</label>
+              <input
+                type="text"
+                placeholder="Your name"
+                className="w-full mt-1 px-4 py-2 border rounded-md outline-none"
+              />
+            </div>
+
+            {/* Buyer Email */}
+            <div>
+              <label className="text-sm font-medium">Buyer Email</label>
+              <input
+                type="email"
+                placeholder="Your Email"
+                className="w-full mt-1 px-4 py-2 border rounded-md outline-none"
+              />
+            </div>
+
+            {/* Buyer Image */}
+            <div className="md:col-span-2">
+              <label className="text-sm font-medium">Buyer Image URL</label>
+              <input
+                type="text"
+                placeholder="https://...your_img_url"
+                className="w-full mt-1 px-4 py-2 border rounded-md outline-none"
+              />
+            </div>
+
+            {/* Offered Price */}
+            <div className="md:col-span-2">
+              <label className="text-sm font-medium">Place your Price</label>
+              <input
+                type="number"
+                placeholder="e.g. 25000"
+                className="w-full mt-1 px-4 py-2 border rounded-md outline-none"
+              />
+            </div>
+
+            {/* Contact */}
+            <div className="md:col-span-2">
+              <label className="text-sm font-medium">Contact Info</label>
+              <input
+                type="text"
+                placeholder="e.g. +8801XXXXXXXXX"
+                className="w-full mt-1 px-4 py-2 border rounded-md outline-none"
+              />
+            </div>
+
+            {/* Buttons */}
+            <div className="md:col-span-2 flex justify-end gap-3 mt-6">
+              {/* Cancel */}
+              <form method="dialog">
+                <button className="px-5 py-2 rounded-md border border-[#632EE3] text-[#632EE3] font-medium hover:bg-purple-50">
+                  Cancel
+                </button>
+              </form>
+
+              {/* Submit */}
+              <button
+                type="submit"
+                className="px-5 py-2 rounded-md text-white font-medium bg-gradient-to-br from-[#632EE3] to-[#9F62F2]"
+              >
+                Submit Bid
+              </button>
+            </div>
+          </form>
+        </div>
+      </dialog>
     </div>
   );
 };
