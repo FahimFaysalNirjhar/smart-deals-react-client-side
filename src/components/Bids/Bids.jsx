@@ -5,7 +5,7 @@ const Bids = ({ bid, index }) => {
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/products/${product_id}`)
+    fetch(`https://smart-deals-server-weld.vercel.app/products/${product_id}`)
       .then((res) => res.json())
       .then((data) => setProduct(data));
   }, [product_id]);

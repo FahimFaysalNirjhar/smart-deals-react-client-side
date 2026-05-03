@@ -1,9 +1,9 @@
 import React from "react";
 import Product from "../../components/Product/Product";
 
-const productsPromise = fetch("http://localhost:3000/products").then((res) =>
-  res.json(),
-);
+const productsPromise = fetch(
+  "https://smart-deals-server-weld.vercel.app/products",
+).then((res) => res.json());
 
 const Products = () => {
   return (

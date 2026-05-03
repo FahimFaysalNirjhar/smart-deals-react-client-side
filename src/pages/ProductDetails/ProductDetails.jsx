@@ -64,7 +64,7 @@ const ProductDetails = () => {
       created_at,
     };
 
-    fetch("http://localhost:3000/bids", {
+    fetch("https://smart-deals-server-weld.vercel.app/bids", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -86,7 +86,7 @@ const ProductDetails = () => {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:3000/product/bids/${_id}`)
+    fetch(`https://smart-deals-server-weld.vercel.app/product/bids/${_id}`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);

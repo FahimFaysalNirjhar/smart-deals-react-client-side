@@ -7,7 +7,9 @@ const Hero = ({ setSearchData }) => {
     const search = e.target.search.value;
     console.log(search);
 
-    fetch(`http://localhost:3000/products/search?q=${search}`)
+    fetch(
+      `https://smart-deals-server-weld.vercel.app/products/search?q=${search}`,
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
