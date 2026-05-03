@@ -1,7 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 
-const ProductTable = ({ bid, index, handleDelete }) => {
+const ProductTable = ({ product, index, handleDelete, handleModal }) => {
+  const navigate = useNavigate();
   const {
     _id,
     productImage: image,
@@ -10,7 +12,19 @@ const ProductTable = ({ bid, index, handleDelete }) => {
     minPrice,
     maxPrice,
     status,
-  } = bid;
+  } = product;
+
+  const handleMakeSold = (id) => {
+    console.log(id);
+    Swal.fire({
+      title: "Marked as Sold ✅",
+      text: "Your product has been successfully marked as sold.",
+      icon: "success",
+      confirmButtonText: "Awesome!",
+      confirmButtonColor: "#632EE3",
+    });
+    navigate("/products");
+  };
 
   return (
     <tr className="hover:bg-gray-50 transition-colors duration-150">
@@ -55,7 +69,10 @@ const ProductTable = ({ bid, index, handleDelete }) => {
       {/* Actions */}
       <td className="px-5 py-4">
         <div className="flex items-center gap-2">
-          <button className="px-3 py-1 text-xs font-medium border border-violet-500 text-violet-500 rounded-md hover:bg-violet-50 transition-colors">
+          <button
+            onClick={() => handleModal(_id)}
+            className="px-3 py-1 text-xs font-medium border border-violet-500 text-violet-500 rounded-md hover:bg-violet-50 transition-colors"
+          >
             Edit
           </button>
           <button
@@ -65,7 +82,7 @@ const ProductTable = ({ bid, index, handleDelete }) => {
             Delete
           </button>
           <button
-            // onClick={() => handleMakeSold(_id)}
+            onClick={() => handleMakeSold(_id)}
             disabled={status === "Sold"}
             className="px-3 py-1 text-xs font-medium border border-emerald-500 text-emerald-500 rounded-md hover:bg-emerald-50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
           >
