@@ -19,7 +19,11 @@ const MyProducts = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/products?email=${user.email}`)
+    fetch(`http://localhost:3000/products?email=${user.email}`, {
+      // headers: {
+      //   authorizatrion: `Bearer ${user.accessToken}`,
+      // },
+    })
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);
