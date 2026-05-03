@@ -1,6 +1,7 @@
 import React from "react";
+import Swal from "sweetalert2";
 
-const ProductTable = ({ bid, index }) => {
+const ProductTable = ({ bid, index, handleDelete }) => {
   const {
     _id,
     productImage: image,
@@ -64,7 +65,7 @@ const ProductTable = ({ bid, index }) => {
             Delete
           </button>
           <button
-            onClick={() => handleMakeSold(_id)}
+            // onClick={() => handleMakeSold(_id)}
             disabled={status === "Sold"}
             className="px-3 py-1 text-xs font-medium border border-emerald-500 text-emerald-500 rounded-md hover:bg-emerald-50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
           >

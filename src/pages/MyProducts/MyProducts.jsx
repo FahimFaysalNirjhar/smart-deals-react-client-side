@@ -1,6 +1,7 @@
 import React, { use, useEffect, useState } from "react";
 import { AuthContext } from "../../Provider/AuthContext";
 import ProductTable from "../../components/ProductTable/ProductTable";
+import Swal from "sweetalert2";
 
 const MyProducts = () => {
   const { user } = use(AuthContext);
@@ -16,6 +17,33 @@ const MyProducts = () => {
         console.log(data);
       });
   }, [user]);
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Delete this product?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Delete",
+      confirmButtonColor: "#EF4444",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Deleted!", "", "success");
+        fetch(`http://localhost:3000/products/${id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            if (data.deletedCount) {
+              const remainingProducts = products.filter(
+                (product) => product._id !== id,
+              );
+              setProducts(remainingProducts);
+            }
+          });
+      }
+    });
+  };
 
   return (
     <div className="min-h-screen bg-[#E9E9E9] px-4 py-16">
@@ -41,7 +69,12 @@ const MyProducts = () => {
           </thead>
           <tbody className="divide-y divide-gray-100">
             {products.map((bid, index) => (
-              <ProductTable key={bid._id} bid={bid} index={index} />
+              <ProductTable
+                handleDelete={handleDelete}
+                key={bid._id}
+                bid={bid}
+                index={index}
+              />
             ))}
           </tbody>
         </table>
