@@ -31,7 +31,8 @@ const Bids = ({ bid, index }) => {
               {product?.title ?? "Loading..."}
             </p>
             <p className="text-xs text-gray-400 mt-0.5">
-              ৳ {Number(product?.minPrice).toLocaleString()}
+              $ {Number(product?.minPrice).toLocaleString()} - ${" "}
+              {Number(product?.maxPrice).toLocaleString()}
             </p>
           </div>
         </div>
@@ -61,7 +62,7 @@ const Bids = ({ bid, index }) => {
 
       {/* Bid Price */}
       <td className="px-5 py-4 font-bold text-gray-800">
-        ৳ {Number(bidPrice).toLocaleString()}
+        $ {Number(bidPrice).toLocaleString()}
       </td>
 
       {/* Status */}

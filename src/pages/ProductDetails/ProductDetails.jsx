@@ -1,10 +1,12 @@
-import React, { use, useRef } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import { useLoaderData, Link } from "react-router";
 import { AuthContext } from "../../Provider/AuthContext";
 import Swal from "sweetalert2";
+import ShowBids from "../../components/ShowBids/ShowBids";
 
 const ProductDetails = () => {
   const { user } = use(AuthContext);
+  const [bids, setBids] = useState([]);
   const { displayName, email, photoURL } = user;
   console.log(user);
 
@@ -82,6 +84,16 @@ const ProductDetails = () => {
         });
       });
   };
+
+  useEffect(() => {
+    fetch(`http://localhost:3000/product/bids/${_id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+
+        setBids(data);
+      });
+  }, [_id]);
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
@@ -183,6 +195,32 @@ const ProductDetails = () => {
         </div>
 
         <p className="text-gray-600 text-sm leading-relaxed">{description}</p>
+      </div>
+
+      <div className="px-4 py-16">
+        <p className="text-[#001931] text-2xl sm:text-3xl md:text-5xl font-bold leading-tight mb-10">
+          Bids For This Products:{" "}
+          <span className="bg-gradient-to-br from-[#632EE3] to-[#9F62F2] bg-clip-text text-transparent">
+            {bids.length}
+          </span>
+        </p>
+        <div className="max-w-6xl mx-auto overflow-x-auto rounded-2xl border border-gray-200 shadow-sm">
+          <table className="w-full text-sm text-left bg-white">
+            <thead className="bg-gray-50 text-xs text-gray-500 uppercase tracking-wide border-b border-gray-100">
+              <tr>
+                <th className="px-5 py-4 font-semibold">SL</th>
+                <th className="px-5 py-4 font-semibold">Bidder</th>
+                <th className="px-5 py-4 font-semibold">Bid Price</th>
+                <th className="px-5 py-4 font-semibold">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100">
+              {bids.map((bid, index) => (
+                <ShowBids key={bid._id} bid={bid} index={index} />
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* Open the modal using document.getElementById('ID').showModal() method */}

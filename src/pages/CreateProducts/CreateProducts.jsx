@@ -1,6 +1,11 @@
-import React from "react";
+import React, { use } from "react";
+import { AuthContext } from "../../Provider/AuthContext";
+import Swal from "sweetalert2";
 
 const CreateProducts = () => {
+  const { user } = use(AuthContext);
+  console.log(user);
+
   const handleCreateProduct = (e) => {
     e.preventDefault();
 
@@ -65,6 +70,15 @@ const CreateProducts = () => {
       .then((data) => {
         console.log("after new product placed", data);
         e.target.reset();
+        if (data.insertedId) {
+          Swal.fire({
+            title: "Created Successfully ✅",
+            text: "Your product is now live.",
+            icon: "success",
+            timer: 2000,
+            showConfirmButton: false,
+          });
+        }
       });
   };
 
@@ -100,6 +114,7 @@ const CreateProducts = () => {
                   name="title"
                   placeholder="e.g. Yamaha Fz Guitar for Sale"
                   className="w-full mt-1 px-4 py-2 border border-[#D2D2D2] rounded-md outline-none"
+                  required
                 />
               </div>
 
@@ -125,6 +140,7 @@ const CreateProducts = () => {
                 <input
                   type="number"
                   name="min_price"
+                  required
                   placeholder="e.g. 18.5"
                   className="w-full mt-1 px-4 py-2 border border-[#D2D2D2] rounded-md outline-none"
                 />
@@ -138,6 +154,7 @@ const CreateProducts = () => {
                 <input
                   type="number"
                   name="max_price"
+                  required
                   placeholder="Optional (default = Min Price)"
                   className="w-full mt-1 px-4 py-2 border border-[#D2D2D2] rounded-md outline-none"
                 />
@@ -155,6 +172,7 @@ const CreateProducts = () => {
                       value="fresh"
                       name="condition"
                       defaultChecked
+                      required
                     />
                     Brand New
                   </label>
@@ -173,6 +191,7 @@ const CreateProducts = () => {
                 <input
                   type="text"
                   name="used_time"
+                  required
                   placeholder="e.g. 1 year 3 month"
                   className="w-full mt-1 px-4 py-2 border border-[#D2D2D2] rounded-md outline-none"
                 />
@@ -184,6 +203,7 @@ const CreateProducts = () => {
                   Your Product Image URL
                 </label>
                 <input
+                  required
                   type="text"
                   name="productImage"
                   placeholder="https://..."
@@ -197,6 +217,8 @@ const CreateProducts = () => {
                 <input
                   type="text"
                   name="sellerName"
+                  required
+                  defaultValue={user.displayName}
                   placeholder="e.g. Artisan Roasters"
                   className="w-full mt-1 px-4 py-2 border border-[#D2D2D2] rounded-md outline-none"
                 />
@@ -208,6 +230,8 @@ const CreateProducts = () => {
                 <input
                   type="email"
                   name="sellerEmail"
+                  required
+                  defaultValue={user.email}
                   placeholder="leli31955@nlord.com"
                   className="w-full mt-1 px-4 py-2 border border-[#D2D2D2] rounded-md outline-none"
                 />
@@ -219,6 +243,7 @@ const CreateProducts = () => {
                 <input
                   type="text"
                   name="sellerContact"
+                  required
                   placeholder="e.g. +1-555-1234"
                   className="w-full mt-1 px-4 py-2 border border-[#D2D2D2] rounded-md outline-none"
                 />
@@ -230,6 +255,8 @@ const CreateProducts = () => {
                 <input
                   type="text"
                   name="sellerImage"
+                  required
+                  defaultValue={user.photoURL}
                   placeholder="https://..."
                   className="w-full mt-1 px-4 py-2 border border-[#D2D2D2] rounded-md outline-none"
                 />
@@ -241,6 +268,7 @@ const CreateProducts = () => {
                 <input
                   type="text"
                   name="location"
+                  required
                   placeholder="City, Country"
                   className="w-full mt-1 px-4 py-2 border border-[#D2D2D2] rounded-md outline-none"
                 />
@@ -254,6 +282,7 @@ const CreateProducts = () => {
                 <textarea
                   rows="4"
                   name="description"
+                  required
                   placeholder="e.g. I bought this product 3 month ago..."
                   className="w-full mt-1 px-4 py-2 border border-[#D2D2D2] rounded-md outline-none"
                 ></textarea>
