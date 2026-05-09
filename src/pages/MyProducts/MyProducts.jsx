@@ -20,7 +20,7 @@ const MyProducts = () => {
 
   useEffect(() => {
     fetch(
-      `https://smart-deals-server-weld.vercel.app/products?email=${user.email}`,
+      `https://smart-deals-server-sooty.vercel.app/products?email=${user.email}`,
       {
         // headers: {
         //   authorizatrion: `Bearer ${user.accessToken}`,
@@ -44,7 +44,7 @@ const MyProducts = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire("Deleted!", "", "success");
-        fetch(`https://smart-deals-server-weld.vercel.app/products/${id}`, {
+        fetch(`https://smart-deals-server-sooty.vercel.app/products/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -99,7 +99,7 @@ const MyProducts = () => {
       sellerImage,
     };
 
-    fetch(`https://smart-deals-server-weld.vercel.app/products/${productId}`, {
+    fetch(`https://smart-deals-server-sooty.vercel.app/products/${productId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

@@ -59,7 +59,7 @@ const CreateProducts = () => {
     };
     console.log(newProduct);
 
-    fetch("https://smart-deals-server-weld.vercel.app/products", {
+    fetch("https://smart-deals-server-sooty.vercel.app/products", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

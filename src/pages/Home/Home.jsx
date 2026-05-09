@@ -5,7 +5,7 @@ import SearchData from "../../components/SearchData/SearchData";
 import ShowAll from "../../components/ShowAll/ShowAll";
 
 const latestProductsPromise = fetch(
-  "https://smart-deals-server-weld.vercel.app/latest-products",
+  "https://smart-deals-server-sooty.vercel.app/latest-products",
 ).then((res) => res.json());
 
 const Home = () => {

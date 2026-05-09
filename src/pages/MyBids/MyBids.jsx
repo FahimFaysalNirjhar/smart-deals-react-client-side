@@ -8,7 +8,7 @@ const MyBids = () => {
 
   useEffect(() => {
     fetch(
-      `https://smart-deals-server-weld.vercel.app/bids?email=${user.email}`,
+      `https://smart-deals-server-sooty.vercel.app/bids?email=${user.email}`,
       {
         headers: {
           authorization: `Bearer ${user.accessToken}`,
