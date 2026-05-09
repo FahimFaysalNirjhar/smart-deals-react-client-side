@@ -19,17 +19,24 @@ const MyProducts = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
+    if (!user?.email) return;
+
     fetch(
       `https://smart-deals-server-sooty.vercel.app/products?email=${user.email}`,
       {
-        // headers: {
-        //   authorizatrion: `Bearer ${user.accessToken}`,
-        // },
+        headers: {
+          authorization: `Bearer ${user.accessToken}`, // ✅ fixed typo
+        },
       },
     )
       .then((res) => res.json())
       .then((data) => {
-        setProducts(data);
+        // ✅ handle both array and object response
+        if (Array.isArray(data)) {
+          setProducts(data);
+        } else {
+          setProducts([]);
+        }
         console.log(data);
       });
   }, [user]);
